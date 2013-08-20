@@ -1,4 +1,4 @@
-(function($) {
+(function(vjs) {
   /*
     ======== A Handy Little QUnit Reference ========
     http://api.qunitjs.com/
@@ -20,43 +20,39 @@
       throws(block, [expected], [message])
   */
 
-  module('jQuery#awesome', {
+  module('videojs#awesome', {
     // This will run before each test in this module.
     setup: function() {
-      this.elems = $('#qunit-fixture').children();
+      this.player = vjs(document.querySelector('#qunit-fixture video'));
     }
   });
 
-  test('is chainable', function() {
+  test('is registered', function() {
     expect(1);
-    // Not a bad test to run on collection methods.
-    strictEqual(this.elems.awesome(), this.elems, 'should be chainable');
+    ok(this.player.awesome, 'the awesome plugin is present');
   });
 
-  test('is awesome', function() {
-    expect(1);
-    strictEqual(this.elems.awesome().text(), 'awesome0awesome1awesome2', 'should be awesome');
+  module('videojs.awesome', {
+    // This will run before each test in this module.
+    setup: function() {
+      this.player = vjs(document.querySelector('#qunit-fixture video'));
+    }
   });
-
-  module('jQuery.awesome');
 
   test('is awesome', function() {
     expect(2);
-    strictEqual($.awesome(), 'awesome.', 'should be awesome');
-    strictEqual($.awesome({punctuation: '!'}), 'awesome!', 'should be thoroughly awesome');
+    this.player.awesome();
+    strictEqual(this.player.awesome.go(), 'awesome.', 'should be awesome');
+    strictEqual(this.player.awesome.extreme(), 'awesome!', 'should be thoroughly awesome');
   });
 
-  module(':awesome selector', {
-    // This will run before each test in this module.
-    setup: function() {
-      this.elems = $('#qunit-fixture').children();
-    }
-  });
-
-  test('is awesome', function() {
+  test('default options can be overridden', function() {
     expect(1);
-    // Use deepEqual & .get() when comparing jQuery objects.
-    deepEqual(this.elems.filter(':awesome').get(), this.elems.last().get(), 'knows awesome when it sees it');
+    this.player.awesome({
+      awesome: false
+    });
+
+    strictEqual(this.player.awesome.go(), ':(', 'should be sad face');
   });
 
-}(jQuery));
+}(window.videojs));

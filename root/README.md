@@ -3,19 +3,18 @@
 {%= description %}
 
 ## Getting Started
-Download the [production version][min] or the [development version][max].
-
-[min]: https://raw.github.com/{%= git_user %}/{%= git_repo %}/master/dist/{%= name %}.min.js
-[max]: https://raw.github.com/{%= git_user %}/{%= git_repo %}/master/dist/{%= name %}.js
+Download [videojs](http://www.videojs.com/)
 
 In your web page:
 
 ```html
-<script src="jquery.js"></script>
+<video id="video" src="movie.mp4" controls></video>
+<script src="video.js"></script>
 <script src="dist/{%= name %}.min.js"></script>
 <script>
-jQuery(function($) {
-  $.awesome(); // "awesome"
+videojs('video', {}, function() {
+  var player = this;
+  player.awesome(); // "awesome"
 });
 </script>
 ```

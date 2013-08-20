@@ -6,33 +6,54 @@
  * Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.
  */
 
-(function($) {
+(function(vjs) {
 
-  // Collection method.
-  $.fn.awesome = function() {
-    return this.each(function(i) {
-      // Do something awesome to each selected element.
-      $(this).html('awesome' + i);
-    });
-  };
+  var
+    /**
+     * Copies properties from one or more objects onto an original.
+     */
+    extend = function(obj /*, arg1, arg2, ... */) {
+      var arg, i, k;
+      for (i = 1; i < arguments.length; i++) {
+        arg = arguments[i];
+        for (k in arg) {
+          if (arg.hasOwnProperty(k)) {
+            obj[k] = arg[k];
+          }
+        }
+      }
+      return obj;
+    },
 
-  // Static method.
-  $.awesome = function(options) {
-    // Override default options with passed-in options.
-    options = $.extend({}, $.awesome.options, options);
-    // Return something awesome.
-    return 'awesome' + options.punctuation;
-  };
+    // define some reasonable defaults for this sweet plugin
+    defaults = {
+      awesome: true
+    },
 
-  // Static method default options.
-  $.awesome.options = {
-    punctuation: '.'
-  };
+    // plugin initializer
+    awesome = function(options) {
+      var
+        // save a reference to the player instance
+        player = this,
 
-  // Custom selector.
-  $.expr[':'].awesome = function(elem) {
-    // Is this element awesome?
-    return $(elem).text().indexOf('awesome') !== -1;
-  };
+        // merge options and defaults
+        settings = extend({}, defaults, options || {});
 
-}(jQuery));
+      // replace the initializer with the plugin functionality
+      player.awesome = {
+        go: function() {
+          if (settings.awesome) {
+            return 'awesome.';
+          }
+          return ':(';
+        },
+        extreme: function() {
+          return 'awesome!';
+        }
+      };
+    };
+  
+  // register the plugin with video.js
+  vjs.plugin('awesome', awesome);
+
+}(window.videojs));

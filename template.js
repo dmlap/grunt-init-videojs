@@ -1,5 +1,7 @@
 /*
- * grunt-init-jquery
+ * grunt-init-videojs
+ *
+ * Adapted from grunt-init-jquery
  * https://gruntjs.com/
  *
  * Copyright (c) 2013 "Cowboy" Ben Alman, contributors
@@ -9,20 +11,17 @@
 'use strict';
 
 // Basic template description.
-exports.description = 'Create a jQuery plugin, including QUnit unit tests.';
+exports.description = 'Create a video.js plugin, including QUnit unit tests.';
 
 // Template-specific notes to be displayed before question prompts.
-exports.notes = '_Project name_ should not contain "jquery" or "js" and ' +
-  'should be a unique ID not already in use at plugins.jquery.com. _Project ' +
+exports.notes = '_Project name_ should not contain "videojs" or "js" and ' +
+  'should be a unique ID not already in use at github.com/videojs/video.js/wiki/Plugins. _Project ' +
   'title_ should be a human-readable title, and doesn\'t need to contain ' +
-  'the word "jQuery", although it may. For example, a plugin titled "Awesome ' +
+  'the word "videojs", although it may. For example, a plugin titled "Awesome ' +
   'Plugin" might have the name "awesome-plugin".' +
   '\n\n'+
   'For more information, please see the following documentation:' +
-  '\n\n'+
-  'Naming Your Plugin      http://plugins.jquery.com/docs/names/\n' +
-  'Publishing Your Plugin  http://plugins.jquery.com/docs/publish/\n' +
-  'Package Manifest        http://plugins.jquery.com/docs/package-manifest/';
+  'https://github.com/videojs/video.js/blob/master/docs/plugins.md';
 
 // Template-specific notes to be displayed after question prompts.
 exports.after = 'You should now install project dependencies with _npm ' +
@@ -38,15 +37,15 @@ exports.warnOn = '*';
 // The actual init template.
 exports.template = function(grunt, init, done) {
 
-  init.process({type: 'jquery'}, [
+  init.process({type: 'videojs'}, [
     // Prompt for these values.
     init.prompt('name'),
     init.prompt('title', function(value, data, done) {
-      // Fix jQuery capitalization.
-      value = value.replace(/jquery/gi, 'jQuery');
+      // Fix videojs capitalization.
+      value = value.replace(/videojs/gi, 'videojs');
       done(null, value);
     }),
-    init.prompt('description', 'The best jQuery plugin ever.'),
+    init.prompt('description', 'The best video.js plugin ever.'),
     init.prompt('version'),
     init.prompt('repository'),
     init.prompt('homepage'),
@@ -55,11 +54,12 @@ exports.template = function(grunt, init, done) {
     init.prompt('author_name'),
     init.prompt('author_email'),
     init.prompt('author_url'),
-    init.prompt('jquery_version')
+    init.prompt('videojs_version', '4.1.0')
   ], function(err, props) {
     // A few additional properties.
-    props.jqueryjson = props.name + '.jquery.json';
-    props.dependencies = {jquery: props.jquery_version || '>= 1'};
+    props.dependencies = {
+      videojs: props.videojs_version || '>= 4'
+    };
 
     props.keywords = [];
 
@@ -74,8 +74,10 @@ exports.template = function(grunt, init, done) {
 
     // Generate package.json file, used by npm and grunt.
     init.writePackageJSON('package.json', {
-      name: 'jquery-plugin',
-      version: '0.0.0-ignored',
+      name: props.name,
+      author_name: props.author_name,
+      author_email: props.author_email,
+      version: props.version,
       npm_test: 'grunt qunit',
       // TODO: pull from grunt's package.json
       node_version: '>= 0.8.0',
@@ -87,13 +89,6 @@ exports.template = function(grunt, init, done) {
         'grunt-contrib-watch': '~0.4.0',
         'grunt-contrib-clean': '~0.4.0',
       },
-    });
-
-    // Generate jquery.json file.
-    init.writePackageJSON(props.jqueryjson, props, function(pkg, props) {
-      // The jQuery site needs the "bugs" value as a string.
-      if ('bugs' in props) { pkg.bugs = props.bugs; }
-      return pkg;
     });
 
     // All done!
