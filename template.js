@@ -74,7 +74,7 @@ exports.template = function(grunt, init, done) {
 
     // Generate package.json file, used by npm and grunt.
     init.writePackageJSON('package.json', {
-      name: props.name,
+      name: 'videojs-' + props.name,
       author_name: props.author_name,
       author_email: props.author_email,
       version: props.version,
