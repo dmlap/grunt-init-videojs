@@ -31,7 +31,7 @@
     },
 
     // plugin initializer
-    awesome = function(options) {
+    {%= name %} = function(options) {
       var
         // save a reference to the player instance
         player = this,
@@ -40,7 +40,7 @@
         settings = extend({}, defaults, options || {});
 
       // replace the initializer with the plugin functionality
-      player.awesome = {
+      player.{%= name %} = {
         go: function() {
           if (settings.awesome) {
             return 'awesome.';
@@ -54,6 +54,6 @@
     };
   
   // register the plugin with video.js
-  vjs.plugin('awesome', awesome);
+  vjs.plugin('{%= name %}', {%= name %});
 
 }(window.videojs));

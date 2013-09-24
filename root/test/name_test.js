@@ -20,7 +20,7 @@
       throws(block, [expected], [message])
   */
 
-  module('videojs#awesome', {
+  module('videojs.{%= name %}', {
     // This will run before each test in this module.
     setup: function() {
       this.player = vjs(document.querySelector('#qunit-fixture video'));
@@ -29,30 +29,23 @@
 
   test('is registered', function() {
     expect(1);
-    ok(this.player.awesome, 'the awesome plugin is present');
-  });
-
-  module('videojs.awesome', {
-    // This will run before each test in this module.
-    setup: function() {
-      this.player = vjs(document.querySelector('#qunit-fixture video'));
-    }
+    ok(this.player.{%= name %}, 'the {%= name %} plugin is present');
   });
 
   test('is awesome', function() {
     expect(2);
-    this.player.awesome();
-    strictEqual(this.player.awesome.go(), 'awesome.', 'should be awesome');
-    strictEqual(this.player.awesome.extreme(), 'awesome!', 'should be thoroughly awesome');
+    this.player.{%= name %}();
+    strictEqual(this.player.{%= name %}.go(), 'awesome.', 'should be awesome');
+    strictEqual(this.player.{%= name %}.extreme(), 'awesome!', 'should be thoroughly awesome');
   });
 
   test('default options can be overridden', function() {
     expect(1);
-    this.player.awesome({
+    this.player.{%= name %}({
       awesome: false
     });
 
-    strictEqual(this.player.awesome.go(), ':(', 'should be sad face');
+    strictEqual(this.player.{%= name %}.go(), ':(', 'should be sad face');
   });
 
 }(window.videojs));
