@@ -14,7 +14,7 @@ In your web page:
 <script>
 videojs('video', {}, function() {
   var player = this;
-  player.awesome(); // "awesome"
+  player.{%= name %}(); // initialize the plugin
 });
 </script>
 ```
@@ -23,7 +23,7 @@ videojs('video', {}, function() {
 _(Coming soon)_
 
 ## Examples
-_(Coming soon)_
+Check out example.html to see {%= title %} in action.
 
 ## Release History
 _(Nothing yet)_
