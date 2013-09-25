@@ -8,9 +8,14 @@ Download [videojs](http://www.videojs.com/)
 In your web page:
 
 ```html
-<video id="video" src="movie.mp4" controls></video>
+<link rel="stylesheet" href="video-js.css">
+<video id="video"
+       class="video-js vjs-default-skin"
+       src="movie.mp4"
+       controls>
+</video>
 <script src="video.js"></script>
-<script src="dist/{%= name %}.min.js"></script>
+<script src="dist/videojs.{%= name %}.min.js"></script>
 <script>
 videojs('video', {}, function() {
   var player = this;
